@@ -431,7 +431,13 @@ void CLMiner::listDevices()
 				outString += "CPU\n";
 				break;
 			case CL_DEVICE_TYPE_GPU:
-				outString += "GPU\n";
+				{
+				cl_uint maxCus;
+				clGetDeviceInfo(device(), CL_DEVICE_MAX_COMPUTE_UNITS, sizeof(maxCus), &maxCus, NULL);
+				stringstream ss;
+				ss << maxCus;
+				outString += "GPU #CUs = " + ss.str() + '\n';
+				}
 				break;
 			case CL_DEVICE_TYPE_ACCELERATOR:
 				outString += "ACCELERATOR\n";
